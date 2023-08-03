@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { Button } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import Header from './components/Header';
 
 import './App.css';
@@ -11,12 +14,15 @@ function App() {
     <>
       <Header />
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is 
-          {' '}
-          {count}
-        </button>
+        <Button variant='contained' onClick={() => setCount((count) => count + 1)}>
+          count up
+        </Button>
+        <p>{count}</p>
+        <Button variant='contained' onClick={() => setCount((count)=> count - 1)}>
+          count down
+        </Button>
       </div>
+      <DatePicker label="Basic date picker" />
     </>
   );
 }
