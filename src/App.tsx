@@ -10,21 +10,32 @@ import './App.css';
 function App() {
   const [count, setCount] = useState(0);
 
-  return (
-    <>
-      <Header />
-      <div className="card">
-        <Button variant='contained' onClick={() => setCount((count) => count + 1)}>
-          count up
-        </Button>
-        <p>{count}</p>
-        <Button variant='contained' onClick={() => setCount((count)=> count - 1)}>
-          count down
-        </Button>
-      </div>
-      <DatePicker label="Basic date picker" />
-    </>
-  );
+  const handleCountDown = (): void => {
+    if (count > 0) {
+      setCount((count) => count - 1);
+    }
+  };
+
+return (
+  <>
+    <Header />
+    <div className="card">
+      <Button 
+      sx={{ color: 'black' }}
+      variant='contained' color='info' onClick={() => setCount((count) => count + 1)}>
+        count up
+      </Button>
+      <p>{count}</p>
+      <Button 
+      sx={{ color: 'black' }}
+      variant='contained' color='warning' onClick={handleCountDown}>
+        count down
+        Send
+      </Button>
+    </div>
+    <DatePicker label="Pick a date..." />
+  </>
+); 
 }
 
 export default App;

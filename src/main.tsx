@@ -14,7 +14,7 @@ import 'dayjs/locale/pt-br';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-US">
         <CssBaseline />
         <App />
       </LocalizationProvider>

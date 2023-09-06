@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
-import { ptBR as dataGridPtBr } from '@mui/x-data-grid';
-import { ptBR as dateTimePtBr } from '@mui/x-date-pickers/locales';
+import { enUS as dataGridEnUS } from '@mui/x-data-grid';
+import { enUS as dateTimeEnUS } from '@mui/x-date-pickers/locales';
 
 const theme = createTheme(
   {
@@ -41,12 +41,12 @@ const theme = createTheme(
         dark: '#80DEEA',
       },
       background: {
-        default: 'white',
+        default: '#f5f5f5',
       },
     },
   },
-  dateTimePtBr,
-  dataGridPtBr
+  dateTimeEnUS, // Use the English locale for date pickers
+  dataGridEnUS // Use the English locale for data grid
 );
 
 export default theme;
