@@ -23,7 +23,10 @@
       "@/pages*": ["./src/pages*"],
       "@/schemas*": ["./src/schemas*"],
       "@/styles*": ["./src/styles*"],
-      "@/utils*": ["./src/utils*"]
+      "@/utils*": ["./src/utils*"],
+      "@/request*": ["./src/request*"],
+      "@/types*": ["./src/types*"],
+      "@/redux*": ["./src/redux*"]
     },
 
     /* Linting */
