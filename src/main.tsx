@@ -5,8 +5,6 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-import './index.css';
-
 import App from './App.tsx';
 import store from './redux/store.ts';
 import theme from './styles/theme.ts';

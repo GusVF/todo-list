@@ -41,7 +41,7 @@ const theme = createTheme(
         dark: '#80DEEA',
       },
       background: {
-        default: '#f5f5f5',
+        default: '#d2dae2',
       },
     },
   },

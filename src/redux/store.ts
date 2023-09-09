@@ -7,6 +7,8 @@ const rootReducer = combineReducers({
   todoReducer,
 });
 
+export type RootState = ReturnType<typeof rootReducer>; // Define RootState here
+
 const store = createStore(
   rootReducer,
   applyMiddleware(thunk)
