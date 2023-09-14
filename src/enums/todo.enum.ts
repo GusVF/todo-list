@@ -1,5 +1,5 @@
 export enum ConstantsEnum {
-  FAKE_TIME_REQUEST = 2000,
+  FAKE_TIME_REQUEST = 1000,
   KEY_LOCAL_STORAGE = 'todos'
 }
 
@@ -10,6 +10,8 @@ export enum StatusEnum {
 
 export enum ActionTypesEnum {
   ADD_TODO = 'addTodo',
-  SET_LOADING = 'setLoading',
+  // SET_LOADING = 'setLoading',
   GET_ALL_TODOS = 'getAllTodos',
+  UPDATE_TODO_STATUS = 'updateTodoStatus',
+  DELETE_TODO = 'deleteTodo',
 }

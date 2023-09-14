@@ -1,0 +1,7 @@
+body {
+  background: linear-gradient(to bottom, rgb(23, 6, 108), rgba(255, 255, 255, 0.1));
+  background-size: cover;
+  font-family: 'Monaco', monospace;
+  min-height: 100vh;
+}
+

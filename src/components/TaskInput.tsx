@@ -1,66 +1,104 @@
 import React, { useState } from 'react';
+import '.././styles/TaskInput.css';
 import { useDispatch } from 'react-redux';
 
-import { Button, Stack, TextField } from '@mui/material';
+import { StatusEnum } from '@/enums/todo.enum';
 
-import { StatusEnum } from '../enums/todo.enum';
-import { addNewTodo } from '../redux/actions/todo.action';
-import { NewTodoType } from '../types/todo.type';
+import { addNewTodo } from '@/redux/actions/todo.action';
+import { Dispatch } from '@/types/dispatch';
+import { NewTodoType } from '@/types/todo.type';
+
+import LoadingPopup from './Loading';
 
 const taskInput: React.FC = () => {
-  const [taskInput, setTaskInput] = useState('');
-  const dispatch = useDispatch();
+  const [titleInput, setTitleInput] = useState('');
+  const [descriptionInput, setDescriptionInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskInput(e.target.value);
+  const dispatch: Dispatch = useDispatch();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+
+    if (name === 'title') {
+      setTitleInput(value);
+    } else if (name === 'description') {
+      setDescriptionInput(value);
+    }
   };
 
-  const handleAddTask = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    if (taskInput.trim() !== '') {
-      const newTodo: NewTodoType = {
-        title: taskInput,
-        description: '',
+    if (titleInput.trim() !== '' || descriptionInput.trim() !== '') {
+      const newTodoData: NewTodoType = {
+        title: titleInput,
+        description: descriptionInput,
         status: StatusEnum.PENDING,
-        date: new Date().toISOString()
+        date: new Date().toUTCString(),
       };
-      addNewTodo(newTodo)(dispatch);
-      setTaskInput('');
+
+      try {
+        // Add the newTodo to the Redux store and get the response
+       await addNewTodo(newTodoData)(dispatch);
+
+        // Clear the input fields
+        setTitleInput('');
+        setDescriptionInput('');
+        setIsLoading(false);
+
+        // Handle the response as needed
+      } catch (error) {
+        console.error('Error adding todo', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
   return (
-    <form 
-    onSubmit={handleAddTask}
-    style={{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
-      <Button
-      variant="contained"
-      style={{ marginBottom: '25px',
-       maxWidth: '200px',
-       marginLeft: '10%',
-       paddingTop: '10px',
-       paddingBottom: '10px',
-       border: '1px solid white',
-      }}
-      type="submit"
-      >
-        Click to add...
-      </Button>
-      <Stack 
-      spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap"
-      style={{ marginLeft: '10%' }}
-      >
-        <TextField 
-        label="Type your task!"
-        variant="standard"
-        value={taskInput}
-        onChange={handleInput}
-          />
-      </Stack>
-    </form>
-  );
+    <div>
+      {/* Conditionally render the LoadingPopup component */}
+      <LoadingPopup trigger={isLoading}/>
+      <form onSubmit={handleAddTask} className='form'>
+        <div className=" container">
+          <div className="field">
+            <div className="control">
+              <input
+                type="text"
+                name="title"
+                value={titleInput}
+                onChange={handleInputChange}
+                placeholder="Add your List Title"
+                className="input mb-4"
+              />
+            </div>
+          </div>
+          <div className="field">
+            <div className="control">
+              <input
+                name="description"
+                value={descriptionInput}
+                onChange={handleInputChange}
+                placeholder="Your task description here..."
+                className="textarea mb-4"
+              />
+            </div>
+          </div>
 
+          <button
+            type="submit"
+            className="button addTaskBtn is-light mb-6"
+          >
+            Add a task
+          </button>
+        </div>
+        <div className='taskContainer'>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default taskInput;

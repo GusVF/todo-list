@@ -1,0 +1,15 @@
+.printedList {
+  border: 2px solid rgb(121, 129, 176);
+  box-shadow: 6px 8px 10px rgba(0, 0, 0, 0.2); /* Subtle 3D shadow effect */
+  margin-bottom: 3%;
+  width: 500px;
+}
+
+.printedList:hover {
+  transform: scale(1.02); /* Slight scale up on hover */
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.4); /* Slightly larger shadow on hover */
+}
+
+.task-list-container {
+  width: 800px;
+}

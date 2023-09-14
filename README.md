@@ -57,7 +57,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Acknowledgments
 React
 Redux
-Material-UI
+Bulma
 Author
+
+PS: After thoughts on cool things I added to this App:
+1- it has a cool setup for a Loading... css
+2- You can use most of this Redux Thunk set up on other Apps.
+
 
 Thank you for your visit.

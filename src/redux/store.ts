@@ -1,3 +1,4 @@
+import { composeWithDevTools } from '@redux-devtools/extension';
 import { legacy_createStore as createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -11,7 +12,7 @@ export type RootState = ReturnType<typeof rootReducer>; // Define RootState here
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk)
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 export default store;

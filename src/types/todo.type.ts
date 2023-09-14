@@ -11,7 +11,7 @@ export type UpdateTodoType = {
 export type GlobalStateType = {
     selectedTodo: TodoType | null
     todos: TodoType[]
-    fetching: boolean
+    // fetching: boolean
 }
 
 export type TodoType = UpdateTodoType

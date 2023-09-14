@@ -34,28 +34,7 @@ export const createNewTodo = async (
   });
 };
 
-export const updateTodo = (todo: UpdateTodoType): Promise<UpdateTodoType[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const todos = getTodosLocalStorage();
-
-      const updatedTodos = todos.map((todoItem) => {
-        if (todoItem.id === todo.id) {
-          return todo;
-        }
-        return todoItem;
-      });
-
-      localStorage.setItem(
-        ConstantsEnum.KEY_LOCAL_STORAGE,
-        JSON.stringify(updatedTodos)
-      );
-      resolve(updatedTodos);
-    }, ConstantsEnum.FAKE_TIME_REQUEST);
-  });
-};
-
-export const deleteTodo = async (id: number): Promise<UpdateTodoType[]> => {
+export const deleteTodo = async (id: number): Promise<TodoType[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const todos = getTodosLocalStorage();
@@ -77,3 +56,25 @@ export const getTodosStorage = async (): Promise<TodoType[]> => {
     }, ConstantsEnum.FAKE_TIME_REQUEST);
   });
 };
+
+export const updateTodo = (todo: UpdateTodoType): Promise<UpdateTodoType[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const todos = getTodosLocalStorage();
+
+      const updatedTodos = todos.map((todoItem) => {
+        if (todoItem.id === todo.id) {
+          return todo;
+        }
+        return todoItem;
+      });
+
+      localStorage.setItem(
+        ConstantsEnum.KEY_LOCAL_STORAGE,
+        JSON.stringify(updatedTodos)
+      );
+      resolve(updatedTodos);
+    }, ConstantsEnum.FAKE_TIME_REQUEST);
+  });
+};
+
