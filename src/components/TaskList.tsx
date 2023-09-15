@@ -18,6 +18,7 @@ const TaskList: React.FC = () => {
   // const todos = useSelector((state: RootState) => state.todoReducer.todos);
   const { todoReducer: { todos } } = useSelector((state: RootState) => state);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState<StatusEnum | 'all'>('all');
 
   useEffect(() => {
     setIsLoading(false);
@@ -74,66 +75,83 @@ const TaskList: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  const filterTodoType: TodoType[] = selectedStatus === 'all' ?
+  todos: todos.filter((todo: TodoType) => todo.status === selectedStatus);
   
 return (
-  <div className="task-list-container
-  is-flex
+  <div className="containerList
+   is-flex
+   is-align-items-flex-start">
+    <select
+    className="selectStatus mt-4 mr-6"
+    value={selectedStatus}
+    onChange={(e) => setSelectedStatus(e.target.value as StatusEnum)}
+    >
+      <option value="all">All</option>
+      <option value={StatusEnum.PENDING}>Pending</option>
+      <option value={StatusEnum.COMPLETED}>Complete</option>
+    </select>
+    <div className="task-list-container
+   is-flex
    is-flex-direction-column
-   is-align-items-center">
-    <LoadingPopup trigger={isLoading} />
-    <ul className="task-list">
-      {todos.map((todo: TodoType) => (
-        <li key={todo.id} className="printedList">
-          <div className="list-content">
-            <div className="task-buttons">
-              <button
+   is-align-items-center
+   mt-4">
+      <LoadingPopup trigger={isLoading} />
+      <ul className="task-list">
+        {filterTodoType.map((todo: TodoType) => (
+          <li key={todo.id} className="printedList">
+            <div className="list-content">
+              <div className="task-buttons">
+                <button
               type="submit"
               className="button is-light is-rounded"
               onClick={() => handleStatusTaskUpdate(todo.id)}
             >
-                <span className={todo.status === StatusEnum.PENDING ?
+                  <span className={todo.status === StatusEnum.PENDING ?
               'has-text-danger icon-text': 'has-text-success icon-text'}>
-                  <span className="icon">
-                    {todo.status === StatusEnum.PENDING ? (
-                      <i className="fas fa-ban"></i>
+                    <span className="icon">
+                      {todo.status === StatusEnum.PENDING ? (
+                        <i className="fas fa-ban"></i>
                   ) : (
                     <i className="fas fa-check"></i>
                   )}
+                    </span>
+                    <span>{todo.status === StatusEnum.PENDING ? 'not done' : 'Done'}</span>
                   </span>
-                  <span>{todo.status === StatusEnum.PENDING ? 'not done' : 'Done'}</span>
-                </span>
-              </button>
-              <button
+                </button>
+                <button
               className="button is-light is-danger is-rounded ml-6"
               onClick={() => handleDeleteTask(todo.id)}
             >
-                <span className="icon is-small">
-                  <i className="fa-solid fa-trash"></i>
-                </span>
-              </button>
-            </div>
-            <div className="task-details">
-              <h3 className="mt-3">
-                Task title: 
-                {' '}
-                {todo.title}
-              </h3>
-              <p>
-                Description: 
-                {' '}
-                {todo.description}
-              </p>
-              {/* If you want to display the date, uncomment the following line */}
-              {/* <p>
+                  <span className="icon is-small">
+                    <i className="fa-solid fa-trash"></i>
+                  </span>
+                </button>
+              </div>
+              <div className="task-details">
+                <h3 className="mt-3">
+                  Task title: 
+                  {' '}
+                  {todo.title}
+                </h3>
+                <p>
+                  Description: 
+                  {' '}
+                  {todo.description}
+                </p>
+                {/* If you want to display the date, uncomment the following line */}
+                {/* <p>
               Date: 
               {' '}
               {todo.date}
             </p> */}
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
     ))}
-    </ul>
+      </ul>
+    </div>
   </div>
 );
 };
