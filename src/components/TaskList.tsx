@@ -19,9 +19,16 @@ const TaskList: React.FC = () => {
   const { todoReducer: { todos } } = useSelector((state: RootState) => state);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<StatusEnum | 'all'>('all');
+  const [selectedDateFilter, setSelectedDateFilter] = useState<'most-recent' | 'oldest'>(
+    'most-recent'
+  );
+  const [currentTodo, setCurrentTodo] = useState<TodoType | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editTitle, setEditTitle] = useState('');
+  const [editDescription, setEditDescription] = useState('');
 
   useEffect(() => {
-    setIsLoading(false);
+    // setIsLoading(false);
     // Fetch todos from storage and dispatch them to the Redux store
    dispatch(getAllTodos());
 
@@ -32,17 +39,14 @@ const TaskList: React.FC = () => {
       setIsLoading(true);
       // Fetch the current todo from your Redux store or wherever you have it
       const currentTodo = todos.find((todo: TodoType) => todo.id === todoId);
-  
-      if (!currentTodo) {
-        // Handle the case where the todo with the specified id is not found
-        console.error(`Todo with id ${todoId} not found.`);
-        return;
-      }
+
+      const newStatus = currentTodo.status === StatusEnum.PENDING ? 
+      StatusEnum.COMPLETED : StatusEnum.PENDING;
   
       // Create an UpdateTodoType object based on the current todo
       const updatedTodo: UpdateTodoType = {
         ...currentTodo,
-        status: StatusEnum.COMPLETED,
+        status: newStatus,
       };
   
       // Use the updateTodo function to update the todo in localStorage
@@ -76,22 +80,125 @@ const TaskList: React.FC = () => {
     }
   };
 
-  const filterTodoType: TodoType[] = selectedStatus === 'all' ?
-  todos: todos.filter((todo: TodoType) => todo.status === selectedStatus);
+  // Function that filters by Date.
+  const filterDateTodos = () => {
+    const sortedTodos = [...todos];
+    if (selectedDateFilter === 'most-recent') {
+      sortedTodos.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else if (selectedDateFilter === 'oldest') {
+      sortedTodos.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    }
+    return sortedTodos;
+  };
   
+  // Apply the date filter directly to todos before applying the status filter
+  const filteredTodos = filterDateTodos().filter((todo: TodoType) => {
+    if (selectedStatus === 'all') {
+      return true; // Include all todos when status filter is 'all'
+    } 
+      return todo.status === selectedStatus;
+    
+  });
+
+   // Handle input change that can be used in other codes. 
+   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'title') {
+      setEditTitle(value); // Updated to setEditTitle
+    } else if (name === 'description') {
+      setEditDescription(value); // Updated to setEditDescription
+    }
+  };
+
+  const handleEditTitleAndDescriptionBtn = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, todoId: number) => {
+    event.preventDefault();
+    setIsModalOpen(true);
+
+    const foundTodo = todos.find((todo: TodoType) => todo.id === todoId);
+    if (foundTodo) {
+      setCurrentTodo(foundTodo); // Set currentTodo here
+      setEditTitle(foundTodo.title);
+      setEditDescription(foundTodo.description);
+    }
+  };
+
+  const handleEditTitleAndDescriptionDiv = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, todoId: number) => {
+    event.preventDefault();
+
+    const currentTodo = todos.find((todo: TodoType) => todo.id === todoId);
+    if (currentTodo) {
+      setCurrentTodo(currentTodo);
+      setEditTitle(currentTodo.title);
+      setEditDescription(currentTodo.description);
+      
+      dispatch({
+        type: ActionTypesEnum.UPDATE_TITLE_AND_DESCRIPTION,
+        payload: {
+          id: currentTodo.id,
+          title: editTitle,
+          description: editDescription,
+        },
+      });
+       // Update localStorage with the edited todo
+       const updatedTodoForLocalStorage = {
+        ...currentTodo,
+        title: editTitle,
+        description: editDescription,
+      };
+      updateTodo(updatedTodoForLocalStorage);
+
+      setIsModalOpen(false);
+    }
+  };
+
 return (
   <div className="containerList
    is-flex
    is-align-items-flex-start">
-    <select
+    <div className={`modal has-text-white ${isModalOpen ? 'is-active' : ''}`}>
+      <div className="modal-background" 
+      onClick={(e) => handleEditTitleAndDescriptionDiv(e, currentTodo?.id || 0)}></div>
+
+      <div className="modal-content">
+        <p>Edit your title here!</p>
+        <input className="input modalInput mb-6"
+         type="text"
+         name="title"
+         value={editTitle}
+         onChange={handleInputChange}
+         placeholder="New title..."
+         />
+        <p>Edit your description here!</p>
+        <input className="input modalInput" 
+        type="text"
+        name="description"
+        value={editDescription}
+        onChange={handleInputChange}
+        placeholder="New description..."
+        />
+      </div>
+      <button className="modal-close is-large" aria-label="close" onClick={() => setIsModalOpen(false)}></button>
+
+    </div>
+    <div>
+      <select
     className="selectStatus mt-4 mr-6"
     value={selectedStatus}
     onChange={(e) => setSelectedStatus(e.target.value as StatusEnum)}
     >
-      <option value="all">All</option>
-      <option value={StatusEnum.PENDING}>Pending</option>
-      <option value={StatusEnum.COMPLETED}>Complete</option>
-    </select>
+        <option value="all">All</option>
+        <option value={StatusEnum.PENDING}>Pending</option>
+        <option value={StatusEnum.COMPLETED}>Complete</option>
+      </select>
+      <select
+  className="selectDate mb-4"
+  value={selectedDateFilter}
+  onChange={(e) => setSelectedDateFilter(e.target.value as 'most-recent' | 'oldest')}
+>
+        <option value="most-recent">Most Recent</option>
+        <option value="oldest">Oldest</option>
+      </select>
+    </div>
     <div className="task-list-container
    is-flex
    is-flex-direction-column
@@ -99,34 +206,40 @@ return (
    mt-4">
       <LoadingPopup trigger={isLoading} />
       <ul className="task-list">
-        {filterTodoType.map((todo: TodoType) => (
+        {filteredTodos.map((todo: TodoType) => (
           <li key={todo.id} className="printedList">
             <div className="list-content">
               <div className="task-buttons">
                 <button
-              type="submit"
-              className="button is-light is-rounded"
-              onClick={() => handleStatusTaskUpdate(todo.id)}
-            >
-                  <span className={todo.status === StatusEnum.PENDING ?
-              'has-text-danger icon-text': 'has-text-success icon-text'}>
+                    type="submit"
+                    className="button is-light is-rounded"
+                    onClick={() => handleStatusTaskUpdate(todo.id)}
+                  >
+                  <span className={
+                      todo.status === StatusEnum.PENDING ? 'has-text-danger icon-text' : 'has-text-success icon-text'}>
                     <span className="icon">
                       {todo.status === StatusEnum.PENDING ? (
                         <i className="fas fa-ban"></i>
-                  ) : (
-                    <i className="fas fa-check"></i>
-                  )}
+                        ) : (
+                          <i className="fas fa-check"></i>
+                        )}
                     </span>
                     <span>{todo.status === StatusEnum.PENDING ? 'not done' : 'Done'}</span>
                   </span>
                 </button>
                 <button
-              className="button is-light is-danger is-rounded ml-6"
-              onClick={() => handleDeleteTask(todo.id)}
-            >
+                    className="button is-light is-danger is-rounded ml-6"
+                    onClick={() => handleDeleteTask(todo.id)}
+                  >
                   <span className="icon is-small">
                     <i className="fa-solid fa-trash"></i>
                   </span>
+                </button>
+                <button 
+                className="button is-light is-rounded ml-6"
+                onClick={(e) => handleEditTitleAndDescriptionBtn(e, todo.id)}
+                >
+                  Edit
                 </button>
               </div>
               <div className="task-details">
@@ -141,15 +254,15 @@ return (
                   {todo.description}
                 </p>
                 {/* If you want to display the date, uncomment the following line */}
-                {/* <p>
-              Date: 
-              {' '}
-              {todo.date}
-            </p> */}
+                <p>
+                  Date:
+                  {' '}
+                  {todo.date}
+                </p>
               </div>
             </div>
           </li>
-    ))}
+          ))}
       </ul>
     </div>
   </div>

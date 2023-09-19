@@ -57,7 +57,7 @@ export const getTodosStorage = async (): Promise<TodoType[]> => {
   });
 };
 
-export const updateTodo = (todo: UpdateTodoType): Promise<UpdateTodoType[]> => {
+export const updateTodo = async (todo: UpdateTodoType): Promise<UpdateTodoType[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const todos = getTodosLocalStorage();

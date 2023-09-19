@@ -1,8 +1,12 @@
 import { ActionTypesEnum } from '@/enums/todo.enum';
 
-import { NewTodoType, TodoType } from 'src/types/todo.type';
+import { NewTodoType, TodoType, UpdateTodoType } from 'src/types/todo.type';
 
-import { createNewTodo, deleteTodo, getTodosStorage } from '../../requests/request';
+import { createNewTodo,
+    deleteTodo,
+    getTodosStorage,
+    updateTodo,
+     } from '../../requests/request';
 import { Dispatch } from '../../types/dispatch';
 
 // // Action creators
@@ -66,4 +70,21 @@ export const deleteTodoAction = (todoId: number) => {
       throw error; // Throw the error to be caught in your component
     }
   };
+};
+
+// function that updates the title and description of a todo
+export const updateTitleAndDescription = (todo: UpdateTodoType) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await updateTodo(todo);
+      dispatch({
+        type: ActionTypesEnum.UPDATE_TITLE_AND_DESCRIPTION,
+        payload: response,
+      });
+
+    } catch (error) {
+      console.error('Error todo.action.ts', error);
+      throw error; // Throw the error to be caught in your component
+   }
+ };
 };

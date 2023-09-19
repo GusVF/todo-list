@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -16,17 +17,18 @@
     "baseUrl": ".",
 
     "paths": {
-      "@/components*": ["./src/components*"],
-      "@/enums*": ["./src/enums*"],
-      "@/hooks*": ["./src/hooks*"],
-      "@/interfaces*": ["./src/interfaces*"],
-      "@/pages*": ["./src/pages*"],
-      "@/schemas*": ["./src/schemas*"],
-      "@/styles*": ["./src/styles*"],
-      "@/utils*": ["./src/utils*"],
-      "@/request*": ["./src/request*"],
-      "@/types*": ["./src/types*"],
-      "@/redux*": ["./src/redux*"]
+      "@/components": ["./src/components"],
+      "@/enums": ["./src/enums"],
+      "@/hooks": ["./src/hooks"],
+      "@/interfaces": ["./src/interfaces"],
+      "@/pages": ["./src/pages"],
+      "@/schemas": ["./src/schemas"],
+      "@/styles": ["./src/styles"],
+      "@/utils": ["./src/utils"],
+      "@/request": ["./src/request"],
+      "@/types": ["./src/types"],
+      "@/redux": ["./src/redux"],
+      "@/tests": ["./tests"]
     },
 
     /* Linting */
@@ -35,6 +37,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "setupTests.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

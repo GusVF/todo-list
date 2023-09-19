@@ -12,7 +12,8 @@ React
 Redux
 Redux Thunk
 TypeScript
-Material-UI
+Bulma
+Jest
 localStorage
 Getting Started
 To get started with this project, follow these steps:
@@ -43,6 +44,8 @@ To delete a task, click the "Delete" button.
 Folder Structure
 The project structure is organized as follows:
 
+I used 'Jest' for testing the App. 
+
 src/ - Contains the main application code.
 components/ - Contains React components.
 redux/ - Contains Redux related files (reducers, actions, and store).
@@ -58,11 +61,13 @@ Acknowledgments
 React
 Redux
 Bulma
-Author
+Jest
+
 
 PS: After thoughts on cool things I added to this App:
 1- it has a cool setup for a Loading... css
 2- You can use most of this Redux Thunk set up on other Apps.
+3- It has a feature where you can filter by date or status(concluded/done)
 
 
 Thank you for your visit.

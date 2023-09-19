@@ -36,7 +36,7 @@ const taskInput: React.FC = () => {
         title: titleInput,
         description: descriptionInput,
         status: StatusEnum.PENDING,
-        date: new Date().toUTCString(),
+        date: new Date().toISOString(),
       };
 
       try {

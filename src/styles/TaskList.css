@@ -36,3 +36,24 @@
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
+
+.selectDate {
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  font-family: Monaco, monospace;
+}
+
+.selectDate:hover {
+  border-color: #888;
+}
+
+.selectDate:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}

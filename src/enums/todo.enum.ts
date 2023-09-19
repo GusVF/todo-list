@@ -14,4 +14,5 @@ export enum ActionTypesEnum {
   GET_ALL_TODOS = 'getAllTodos',
   UPDATE_TODO_STATUS = 'updateTodoStatus',
   DELETE_TODO = 'deleteTodo',
+  UPDATE_TITLE_AND_DESCRIPTION = 'updateTitleAndDescription',
 }
