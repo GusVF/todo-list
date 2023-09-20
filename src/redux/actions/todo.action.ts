@@ -9,11 +9,6 @@ import { createNewTodo,
      } from '../../requests/request';
 import { Dispatch } from '../../types/dispatch';
 
-// // Action creators
-// export const setLoading = () => ({
-//   type: ActionTypesEnum.SET_LOADING,
-// });
-
 export const addTodo = (todo: TodoType) => ({
   type: ActionTypesEnum.ADD_TODO,
   payload: todo,

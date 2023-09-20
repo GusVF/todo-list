@@ -10,24 +10,17 @@ const INITIAL_STATE: GlobalStateType = {
 };
 
 export const todoReducer = (state = INITIAL_STATE, action: AnyAction) => {
-  let updatedTodos; // Declare updatedTodos here
+  let updatedTodos;
 
   switch(action.type) {
-    // case ActionTypesEnum.SET_LOADING:
-    //   return {
-    //     ...state,
-    //     fetching: false,
-    //   };
     case ActionTypesEnum.ADD_TODO:
       return {
         ...state,
-        // fetching: false,
         todos: [...state.todos, action.payload],
       };
       case ActionTypesEnum.GET_ALL_TODOS:
         return {
           ...state,
-          // fetching: false,
           todos: action.payload,
         };
       case ActionTypesEnum.UPDATE_TODO_STATUS:
@@ -38,13 +31,11 @@ export const todoReducer = (state = INITIAL_STATE, action: AnyAction) => {
       );
         return {
           ...state, 
-          // fetching: false,
           todos: updatedTodos
         };
         case ActionTypesEnum.DELETE_TODO:
           return {
             ...state,
-            // fetching: false,
             todos: state.todos.filter(todo => todo.id !== action.payload.id)
           };
         case ActionTypesEnum.UPDATE_TITLE_AND_DESCRIPTION:

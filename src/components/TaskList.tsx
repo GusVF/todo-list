@@ -15,7 +15,6 @@ import LoadingPopup from './Loading';
 const TaskList: React.FC = () => {
   const dispatch: Dispatch = useDispatch();
 
-  // const todos = useSelector((state: RootState) => state.todoReducer.todos);
   const { todoReducer: { todos } } = useSelector((state: RootState) => state);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<StatusEnum | 'all'>('all');
@@ -28,8 +27,6 @@ const TaskList: React.FC = () => {
   const [editDescription, setEditDescription] = useState('');
 
   useEffect(() => {
-    // setIsLoading(false);
-    // Fetch todos from storage and dispatch them to the Redux store
    dispatch(getAllTodos());
 
   }, [dispatch]);
@@ -154,7 +151,8 @@ const TaskList: React.FC = () => {
 return (
   <div className="containerList
    is-flex
-   is-align-items-flex-start">
+   is-align-items-flex-start"
+   data-testid="containerList">
     <div className={`modal has-text-white ${isModalOpen ? 'is-active' : ''}`}>
       <div className="modal-background" 
       onClick={(e) => handleEditTitleAndDescriptionDiv(e, currentTodo?.id || 0)}></div>
