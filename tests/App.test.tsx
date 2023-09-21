@@ -19,7 +19,7 @@ describe('Testing if App renders header on screen', () => {
   test('Verifies if header text is "Redux-thunk Task list"', () => {
     const headerText = screen.getByRole('heading', { name: /redux-thunk task list!/i });
     
-    expect(headerText).toBeDefined();
+    expect(headerText).toBeInTheDocument();
   });
 
   test('Checks if taskInput component renders correctly', () => {
@@ -27,9 +27,9 @@ describe('Testing if App renders header on screen', () => {
     const descriptionInput = screen.getByPlaceholderText('Your task description here...');
     const addTaskButton = screen.getByRole('button', { name: 'Add a task' });
 
-    expect(titleInput).toBeDefined();
-    expect(descriptionInput).toBeDefined();
-    expect(addTaskButton).toBeDefined();
+    expect(titleInput).toBeInTheDocument();
+    expect(descriptionInput).toBeInTheDocument();
+    expect(addTaskButton).toBeInTheDocument();
   });
 
   test('Checks if taskList component renders correctly', () => {
@@ -38,8 +38,8 @@ describe('Testing if App renders header on screen', () => {
     const optionMostRecent = screen.getByRole('option', { name: /Most Recent/i });
     const taskListContainer = screen.getByTestId('containerList');
 
-    expect(optionAll).toBeDefined();
-    expect(optionMostRecent).toBeDefined();
-    expect(taskListContainer).toBeDefined();
+    expect(optionAll).toBeInTheDocument();
+    expect(optionMostRecent).toBeInTheDocument();
+    expect(taskListContainer).toBeInTheDocument();
   });
 });

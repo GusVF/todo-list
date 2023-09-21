@@ -10,7 +10,6 @@ export enum StatusEnum {
 
 export enum ActionTypesEnum {
   ADD_TODO = 'addTodo',
-  // SET_LOADING = 'setLoading',
   GET_ALL_TODOS = 'getAllTodos',
   UPDATE_TODO_STATUS = 'updateTodoStatus',
   DELETE_TODO = 'deleteTodo',

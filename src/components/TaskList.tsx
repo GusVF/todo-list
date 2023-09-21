@@ -15,7 +15,8 @@ import LoadingPopup from './Loading';
 const TaskList: React.FC = () => {
   const dispatch: Dispatch = useDispatch();
 
-  const { todoReducer: { todos } } = useSelector((state: RootState) => state);
+  const todos = useSelector((state: RootState) => state.todoReducer.todos);
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<StatusEnum | 'all'>('all');
   const [selectedDateFilter, setSelectedDateFilter] = useState<'most-recent' | 'oldest'>(
@@ -180,6 +181,7 @@ return (
     </div>
     <div>
       <select
+    data-testid="selectStatus"
     className="selectStatus mt-4 mr-6"
     value={selectedStatus}
     onChange={(e) => setSelectedStatus(e.target.value as StatusEnum)}
@@ -189,10 +191,11 @@ return (
         <option value={StatusEnum.COMPLETED}>Complete</option>
       </select>
       <select
-  className="selectDate mb-4"
-  value={selectedDateFilter}
-  onChange={(e) => setSelectedDateFilter(e.target.value as 'most-recent' | 'oldest')}
->
+    data-testid="selectDateFilter"
+    className="selectDate mb-4"
+    value={selectedDateFilter}
+    onChange={(e) => setSelectedDateFilter(e.target.value as 'most-recent' | 'oldest')}
+  >
         <option value="most-recent">Most Recent</option>
         <option value="oldest">Oldest</option>
       </select>
@@ -209,6 +212,7 @@ return (
             <div className="list-content">
               <div className="task-buttons">
                 <button
+                    data-testid="statusButton"
                     type="submit"
                     className="button is-light is-rounded"
                     onClick={() => handleStatusTaskUpdate(todo.id)}

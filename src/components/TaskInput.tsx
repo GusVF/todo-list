@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '.././styles/TaskInput.css';
+import '../styles/TaskInput.css';
 import { useDispatch } from 'react-redux';
 
 import { StatusEnum } from '@/enums/todo.enum';
@@ -72,6 +72,7 @@ const taskInput: React.FC = () => {
                 onChange={handleInputChange}
                 placeholder="Add your List Title"
                 className="input mb-4"
+                data-testid="titleInput"
               />
             </div>
           </div>
