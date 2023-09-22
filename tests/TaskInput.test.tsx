@@ -73,6 +73,9 @@ describe('TaskInput component Elements and it\'s functionalities', () => {
     userEvent.type(titleInput, 'My new task');
     userEvent.type(descriptionInput, 'My new task description');
     userEvent.click(addTaskButton);
+
+    const loadingElement = await screen.findByText('Loading...');
+    expect(loadingElement).toBeInTheDocument();
     
     expect((titleInput as HTMLInputElement).value).toBe('');
     // // Now, you can check for the expected outcomes without waiting

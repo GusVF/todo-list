@@ -206,13 +206,13 @@ return (
    is-align-items-center
    mt-4">
       <LoadingPopup trigger={isLoading} />
-      <ul className="task-list">
+      <ul className="task-list" data-testid='taskList'>
         {filteredTodos.map((todo: TodoType) => (
           <li key={todo.id} className="printedList">
             <div className="list-content">
               <div className="task-buttons">
                 <button
-                    data-testid="statusButton"
+                    data-testid='statusButton'
                     type="submit"
                     className="button is-light is-rounded"
                     onClick={() => handleStatusTaskUpdate(todo.id)}
