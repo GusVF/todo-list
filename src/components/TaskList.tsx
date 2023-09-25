@@ -208,7 +208,7 @@ return (
       <LoadingPopup trigger={isLoading} />
       <ul className="task-list" data-testid='taskList'>
         {filteredTodos.map((todo: TodoType) => (
-          <li key={todo.id} className="printedList">
+          <li key={todo.id} className="printedList" data-testid={`task-${todo.id}`}>
             <div className="list-content">
               <div className="task-buttons">
                 <button

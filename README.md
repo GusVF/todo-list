@@ -1,5 +1,5 @@
 ##React Redux Todo List
-This is a simple Todo list application built with React, Redux, Redux Thunk, and TypeScript. It allows users to add, view, update, and delete tasks. Tasks are stored in both the Redux store and localStorage for persistence.
+This is a simple Todo list application built with React, Redux Thunk, Bulma and TypeScript. It allows users to add, view, update, and delete tasks. Tasks are stored in both the Redux store and localStorage for persistence.
 
 #Features
 Add new tasks with titles and descriptions.
@@ -44,7 +44,7 @@ To delete a task, click the "Delete" button.
 Folder Structure
 The project structure is organized as follows:
 
-I used 'Jest' for testing the App. 
+I used 'Jest' to test the Application. 
 
 src/ - Contains the main application code.
 components/ - Contains React components.
@@ -59,7 +59,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Acknowledgments
 React
-Redux
+Redux Thunk
 Bulma
 Jest
 
