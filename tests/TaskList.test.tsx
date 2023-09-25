@@ -15,6 +15,7 @@ describe('TaskInput component Elements and it\'s functionalities', () => {
 
   beforeEach(() => {
     renderWithRedux(<App />);
+
   });
 
   test('Dropdown Status render and interaction', async () => {
