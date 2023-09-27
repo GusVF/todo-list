@@ -1,3 +1,6 @@
+## Here is the link for you to try the app. 
+https://gusvf.github.io/todo-list/
+
 ##React Redux Todo List
 This is a simple Todo list application built with React, Redux Thunk, Bulma and TypeScript. It allows users to add, view, update, and delete tasks. Tasks are stored in both the Redux store and localStorage for persistence.
 
