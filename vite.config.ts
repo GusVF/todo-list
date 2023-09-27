@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/todo-list',
   resolve: {
     alias: {
       '@/components': path.resolve(__dirname, 'src/components'),
