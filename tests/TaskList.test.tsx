@@ -8,7 +8,7 @@ import App from '../src/App';
 import { StatusEnum } from '../src/enums/todo.enum';
 import renderWithRedux from '../src/utils/renderWithRedux';
 
-describe('TaskInput component Elements and it\'s functionalities', () => {
+describe('Dropdown component Elements', () => {
   beforeAll(() => {
     jest.useFakeTimers();
   });
@@ -47,11 +47,12 @@ describe('TaskInput component Elements and it\'s functionalities', () => {
     test('The rendering and contents of a new task added', async () => {
       const titleInput = await screen.findByPlaceholderText('Add your List Title');
       const descriptionInput = await screen.findByPlaceholderText('Your task description here...');
-      const addTaskButton = screen.getByRole('button', { name: 'Add a task' });
+      const addTaskButton: HTMLButtonElement = screen.getByRole('button', { name: 'Add a task' });
     
       expect(titleInput).toBeInTheDocument();
       expect(descriptionInput).toBeInTheDocument();
       expect(addTaskButton).toBeInTheDocument();
+      expect(addTaskButton.type).toBe('submit');
     
       const testTitle = 'My new task.';
       const testDescription = 'New task description.';
@@ -63,13 +64,12 @@ describe('TaskInput component Elements and it\'s functionalities', () => {
       const loadingElement = await screen.findByText('Loading...');
       expect(loadingElement).toBeInTheDocument();
     
-      jest.runAllTimers();
+      jest.advanceTimersByTime(1500);
     
       // Wait for a short period of time to allow component to re-render
       await waitFor(() => {
         expect(screen.getByTestId('containerList')).toBeInTheDocument();
         expect(screen.getByTestId('taskList')).toBeInTheDocument();
-
       });
-    });    
+    });
 });
